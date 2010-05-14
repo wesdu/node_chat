@@ -25,7 +25,7 @@ var server = createServer(function (req, res) {
     var handler = getMap[url.parse(req.url).pathname] || notFound;
 
     res.simpleText = function (code, body) {
-      res.writeHead(code, { "Content-Type": "text/plain"
+      res.writeHead(code, { "Content-Type": "text/html"
                           , "Content-Length": body.length
                           });
       res.end(body);
@@ -33,7 +33,7 @@ var server = createServer(function (req, res) {
 
     res.simpleJSON = function (code, obj) {
       var body = JSON.stringify(obj);
-      res.writeHead(code, { "Content-Type": "text/json"
+      res.writeHead(code, { "Content-Type": "text/html"
                           , "Content-Length": body.length
                           });
       res.end(body);

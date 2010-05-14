@@ -46,7 +46,7 @@ function userPart(nick, timestamp) {
 // utility functions
 
 util = {
-  urlRE: /https?:\/\/([-\w\.]+)+(:\d+)?(\/([^\s]*(\?\S+)?)?)?/g, 
+  urlRE: /(https?:\/\/)?([-\w\.]+)+(:\d+)?(\/([^\s]*(\?\S+)?)?)?/g, 
 
   //  html sanitizer 
   toStaticHTML: function(inputHtml) {
