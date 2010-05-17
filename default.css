@@ -1,0 +1,148 @@
+	body {
+		
+	}
+	.control_pad {
+		z-index:1;
+		position:absolute;
+		width: 250px;
+		height: 200px;
+		border:solid 3px #666;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		padding:3px;
+		-webkit-box-shadow:2px 2px 1px rgba(0, 0, 0, .2);
+		background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DBF7F8), to(#88E1E6));
+		background: -moz-linear-gradient(100% 100% 90deg, #88E1E6, #DBF7F8)
+	}
+	.control_pad:before {
+		content:"\00a0";
+		display:block; /* reduce the damage in FF3.0 */
+		position:absolute;
+		width:0;
+		height:0;
+		top:50px; /* controls vertical position */
+		left:-60px; /* value = - border-left-width - border-right-width */
+		bottom:auto;
+		border-width:15px 30px;
+		border-style:solid;
+		border-color:transparent #666 transparent transparent;
+	}
+	.control_pad:after {
+		content:"\00a0";
+		display:block; /* reduce the damage in FF3.0 */
+		position:absolute;
+		width:0;
+		height:0;
+		top:56px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+		left:-42px; /* value = - border-left-width - border-right-width */
+		bottom:auto;
+		border-width:9px 21px;
+		border-style:solid;
+		border-color:transparent #C2F0F3 transparent transparent;
+	}
+	.control_pad .content {
+		height:100%;
+		width:100%;
+		overflow-x:inherit;
+		overflow-y:auto;
+		word-wrap:break-word;
+		font-size:13px;
+		line-height:20px;
+	}
+	.control_pad .content .button {
+		display: inline-block;
+		zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+		*display: inline;
+		vertical-align: baseline;
+		margin: 0 2px;
+		outline: none;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		font: 14px/100% Arial, Helvetica, sans-serif;
+		padding: .5em 2em .55em;
+		text-shadow: 0 1px 1px rgba(0,0,0,.3);
+		-webkit-border-radius: .5em; 
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	}
+	.control_pad .content .button:hover {
+		text-decoration: none;
+	}
+	.control_pad .content .button:active {
+		position: relative;
+		top: 1px;
+	}		
+	.control_pad .content input {
+		font-size:13px;
+		height:20px;
+		width:40px;
+		display:inline;
+		vertical-align:middle;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+	}
+	.control_pad .content textarea {
+		width:100%;
+		height:200px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;		
+	}
+	.card {
+		z-index:1;
+		position:absolute;
+		width: 200px;
+		height: 200px;
+		border:solid 2px #666;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		padding:3px;
+		-webkit-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+		-moz-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+	}
+	.card img {
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		height:100%;
+		width:100%;
+	}
+	.control_button {
+		display:none;
+		position:absolute;
+		z-index:2;
+		-webkit-border-radius: 50px;
+		-moz-border-radius: 50px;
+		height:50px;
+		width:50px;
+		background-color:#CCDD55;
+		top:-25px;
+		right:-25px;
+	}
+	.apply_button {
+		cursor:pointer;
+		text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+		font-weight:bold;
+		color:#DBF7F8;
+		line-height:50px;
+		text-indent:4px;
+		display:block;
+		position:absolute;
+		-webkit-border-radius: 50px;
+		-moz-border-radius: 50px;
+		height:50px;
+		width:50px;
+		background-color:#88E1E6;
+		top:-25px;
+		right:-25px;
+		-webkit-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+		-moz-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+	}
+	.card:hover {
+		border:dashed 2px #666;
+	}
+	.card:active {
+		border:dashed 2px #666;
+	}
