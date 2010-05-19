@@ -168,12 +168,12 @@
 			//this.el.dragOutter.html(files[0].fileName+files[0].fileSize+files[0]);
 			//XHR
 			$.ajax({
+			  'contentType': 'multipart/form-data',
 			  'beforeSend': function(xhr) {
-				  //xhr.setRequestHeader("Accept", "text/javascript")
+				  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
 				  xhr.setRequestHeader('X-File-Name', files[0].fileName);
 				  xhr.setRequestHeader('X-File-Size', files[0].fileSize);
 			  },
-			  contentType: 'multipart/form-data',
 			  type: 'POST',
 			  url: '/pushimg',
 			  success: function(data) {
