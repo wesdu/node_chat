@@ -196,9 +196,7 @@ fu.get("/send", function (req, res) {
 });
 
 fu.get("/pushimg",function(req,res) {
-	var body;
-	
-	sys.puts("-------------post-------------");
+	var body="";
    	req.setBodyEncoding("binary");
    	req.addListener("data",function(chunck){
 		body+= chunck;
