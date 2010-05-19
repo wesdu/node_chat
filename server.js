@@ -8,6 +8,7 @@ var fu = require("./fu"),
 
 var MESSAGE_BACKLOG = 200,
     SESSION_TIMEOUT = 60 * 1000;
+    STORE_HISTORY= {};
 
 var channel = new function () {
   var messages = [],
@@ -147,7 +148,6 @@ fu.get("/join", function (req, res) {
   channel.appendMessage(session.nick, "join");
   res.simpleJSON(200, { id: session.id, nick: session.nick});
 });
-
 fu.get("/part", function (req, res) {
   var id = qs.parse(url.parse(req.url).query).id;
   var session;
@@ -192,4 +192,9 @@ fu.get("/send", function (req, res) {
 
   channel.appendMessage(session.nick, "msg", text);
   res.simpleJSON(200, {});
+});
+
+fu.get("/pushimg",function(req,res) {
+   sys.puts("pushing......");
+   res.simpleJSON(200, {});
 });
