@@ -73,6 +73,7 @@ fu.staticHandler = function (filename) {
         body = data;
         headers = { "Content-Type": content_type
                   , "Content-Length": body.length
+				  , "Accept-Ranges" : "bytes"
                   };
         if (!DEBUG) headers["Cache-Control"] = "public";
         sys.puts("static file " + filename + " loaded");
