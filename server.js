@@ -195,6 +195,13 @@ fu.get("/send", function (req, res) {
 });
 
 fu.get("/pushimg",function(req,res) {
-   sys.puts("pushing......");
-   res.simpleJSON(200, {});
+	sys.puts("-------------post-------------");
+   	req.setBodyEncoding("binary");
+   	req.addListener("data",function(chunck){
+		sys.puts(chunck);
+   	});
+   	req.addListener("end",function(){
+   		//
+   	});
+   	//res.simpleJSON(200, {});
 });

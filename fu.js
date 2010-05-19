@@ -21,7 +21,6 @@ fu.get = function (path, handler) {
   getMap[path] = handler;
 };
 var server = createServer(function (req, res) {
-  if (req.method === "GET" || req.method === "HEAD") {
     var handler = getMap[url.parse(req.url).pathname] || notFound;
 
     res.simpleText = function (code, body) {
@@ -40,17 +39,6 @@ var server = createServer(function (req, res) {
     };
 
     handler(req, res);
-  }
-  else if(req.method === "POST") {
-      sys.puts("-------------post-------------");
-      req.setBodyEncoding("binary");
-      req.addListener("data",function(chunck){
-	  sys.puts(chunck);
-      });
-      req.addListener("end",function(){
-	  //
-      });
-  }
 });
 
 fu.listen = function (port, host) {
