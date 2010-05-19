@@ -194,28 +194,33 @@ fu.get("/send", function (req, res) {
   channel.appendMessage(session.nick, "msg", text);
   res.simpleJSON(200, {});
 });
-
+function extname (path) {
+  var index = path.lastIndexOf(".");
+  return index < 0 ? "" : path.substring(index);
+}
 fu.get("/pushimg",function(req,res) {
 	var body="";
+	var filename= req.headers["x-file-name"];
+	var length= req.headers["x-file-size"];
+	var content_type = fu.mime.lookupExtension(extname(filename));
    	req.setBodyEncoding("binary");
    	req.addListener("data",function(chunck){
 		body+= chunck;
    	});
    	req.addListener("end",function(){
-   		//STORE_IMG
-		var filename= req.headers["X-File-Name"];
-		var content_type = fu.mime.lookupExtension(extname(filename));
-		var length= req.headers["X-File-Size"];
-		STORE_IMG[filename]= body;
+   		//STORE_IMG	
+		//STORE_IMG[filename]= body;
+		sys.puts("ok");
 		fu.get("/"+filename, function(req,res){
 			var headers = {
 		    	"Content-Length": length
 		   	   ,"Content-Type": content_type
-            };
+			};
 			res.writeHead(200, headers);
-		    res.write(body,"binary");
-		    res.end();
+			res.write(body,"binary");
+			res.end();
 		});
-		res.simpleJSON(200, {url:"/"+filename});
+		sys.puts("ok");
+		res.simpleJSON(200, {src:"/"+filename});
    	});
 });
