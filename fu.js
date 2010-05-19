@@ -87,7 +87,6 @@ fu.staticHandler = function (filename) {
 	    res.writeHead(200, headers);
 	    res.write(body,"binary");
 	    res.end();
-	    sys.puts("binary");	
 	}
 	else {
 	    res.writeHead(200, headers);

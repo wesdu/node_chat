@@ -7,8 +7,9 @@ var fu = require("./fu"),
     qs = require("querystring");
 
 var MESSAGE_BACKLOG = 200,
-    SESSION_TIMEOUT = 60 * 1000;
-    STORE_HISTORY= {};
+    SESSION_TIMEOUT = 60 * 1000,
+    HISTORY= {},
+	STORE_IMG= {};
 
 var channel = new function () {
   var messages = [],
@@ -195,13 +196,28 @@ fu.get("/send", function (req, res) {
 });
 
 fu.get("/pushimg",function(req,res) {
+	var body;
+	
 	sys.puts("-------------post-------------");
    	req.setBodyEncoding("binary");
    	req.addListener("data",function(chunck){
-		sys.puts(chunck);
+		body+= chunck;
    	});
    	req.addListener("end",function(){
-   		//
+   		//STORE_IMG
+		var filename= req.headers["X-File-Name"];
+		var content_type = fu.mime.lookupExtension(extname(filename));
+		var length= req.headers["X-File-Size"];
+		STORE_IMG[filename]= body;
+		fu.get("/"+filename, function(req,res){
+			var headers = {
+		    	"Content-Length": length
+		   	   ,"Content-Type": content_type
+            };
+			res.writeHead(200, headers);
+		    res.write(body,"binary");
+		    res.end();
+		});
+		res.simpleJSON(200, {url:"/"+filename});
    	});
-   	//res.simpleJSON(200, {});
 });
