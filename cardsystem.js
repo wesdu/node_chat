@@ -178,6 +178,7 @@
 				  xhr.setRequestHeader('X-File-Size', files[0].fileSize);
 				  xhr.send(files[0]);
 			  },
+			  dataType: "json",
 			  success: function(data) {
 				_this.host._src= data.src;
 				_this.host.setImg();
