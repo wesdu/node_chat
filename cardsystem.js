@@ -164,7 +164,25 @@
 			}
 		},
 		uploadFiles:function(files) {
-			this.el.dragOutter.html(files[0].fileName+files[0].fileSize+files[0]);
+			//this.el.dragOutter.html(files[0].fileName+files[0].fileSize+files[0]);
+			//XHR
+			$.ajaxSetup({
+		
+			})
+			$.ajax({
+			  'beforeSend': function(xhr) {
+				  //xhr.setRequestHeader("Accept", "text/javascript")
+				  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+				  xhr.setRequestHeader('X-File-Name', files[0].fileName);
+				  xhr.setRequestHeader('X-File-Size', files[0].fileSize);
+			  },
+			  type: 'POST',
+			  url: '/pushimg',
+			  data: files[0],
+			  success: function(data) {
+			  	//
+			  }
+			});
 		},
 		buildDom_flash:function() {
 			this.el={};
