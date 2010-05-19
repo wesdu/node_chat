@@ -61,7 +61,7 @@ fu.staticHandler = function (filename) {
   var fn= null;
   var content_type = fu.mime.lookupExtension(extname(filename));
 
-  function loadResponseData(callback,req,res) {
+  function loadResponseData(callback) {
     if (body && headers && !DEBUG) {
       callback();
       return;
@@ -78,19 +78,6 @@ fu.staticHandler = function (filename) {
 		    ,"Content-Type": content_type
                   };
         if (!DEBUG) headers["Cache-Control"] = "public";
-        if (/image/.test(content_type)) {
-	  
-	  callback= function() {
-	    res.writeHead(200, headers);
-	    res.write(body,"binary");
-	    res.end();
-	    sys.puts("binary");
-	  };
-	  
-	}
-	else {
-	  sys.puts("nothing happen");
-	}
 	sys.puts("static file " + filename + " loaded");
         callback();
       }
@@ -99,9 +86,17 @@ fu.staticHandler = function (filename) {
 
   return function (req, res) {
     loadResponseData(function () {
-	res.writeHead(200, headers);
-	res.end(body);
-    },req,res);
+	if(/image/.test(headers['Content-Type'])) {
+	    res.writeHead(200, headers);
+	    res.write(body,"binary");
+	    res.end();
+	    sys.puts("binary");	
+	}
+	else {
+	    res.writeHead(200, headers);
+	    res.end(body);
+	}
+    });
   }
 };
 
