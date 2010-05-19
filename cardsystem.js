@@ -157,6 +157,7 @@
 					_this.el.dragOutter.css("background","");
 				};
 				dragOutter[0].ondragleave= function (e) {
+					dragOutter.html("&nbsp;Drag a picture here");
 					_this.el.dragOutter.css("background","");
                 };
                 				
@@ -166,19 +167,15 @@
 		uploadFiles:function(files) {
 			//this.el.dragOutter.html(files[0].fileName+files[0].fileSize+files[0]);
 			//XHR
-			$.ajaxSetup({
-		
-			})
 			$.ajax({
 			  'beforeSend': function(xhr) {
 				  //xhr.setRequestHeader("Accept", "text/javascript")
-				  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
 				  xhr.setRequestHeader('X-File-Name', files[0].fileName);
 				  xhr.setRequestHeader('X-File-Size', files[0].fileSize);
 			  },
+			  contentType: 'multipart/form-data',
 			  type: 'POST',
 			  url: '/pushimg',
-			  data: files[0],
 			  success: function(data) {
 			  	//
 			  }
