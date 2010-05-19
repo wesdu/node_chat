@@ -118,7 +118,9 @@
 				_this.host._height= parseInt(_this.el.pad.find("input")[1].value,10);
 				_this.host.setSize();
 				_this.host._src= _this.el.pad.find("input")[2].value;
-				_this.host.setImg();
+				if (_this.host._src) {
+					_this.host.setImg();
+				}
 			});			
 		},
 		buildDom_flash:function() {
@@ -153,12 +155,19 @@
 				_this.host._height= parseInt(_this.el.pad.find("input")[1].value,10);
 				_this.host.setSize();
 				_this.host._src= _this.el.pad.find("input")[2].value;
-				_this.host.el.content.html('<embed \
-					src="'+_this.host._src+'" \
-					quality="high" style="width:100%;height:100%" align="middle" \
-					allowScriptAccess="sameDomain" type="application/x-shockwave-flash">\
-				</embed>');
+				if (_this.host._src) {
+					_this.host.el.content.html('<embed \
+						src="' + _this.host._src + '" \
+						quality="high" style="width:100%;height:100%" align="middle" \
+						allowScriptAccess="sameDomain" type="application/x-shockwave-flash">\
+					</embed>');
+				}
 			});					
+		},
+		destory:function() {
+			var _this= this;
+			this.el.pad.remove();
+			//删除data
 		},
 		reFlow:function() {
 			this.setPosition();
@@ -219,18 +228,23 @@
 		},
 		buildDom:function() {
 			this.el= {};
+			//容器
 			this.el.card= $(document.createElement("div"));
+			//关闭按钮
 			this.el.cb= $(document.createElement("div")); 
 			var card= this.el.card;
 			var cb= this.el.cb;
+			//每个容器的独立ID
 			var id= CONFIG.maxID++;
 			this.id= id;
 			//全局维护
 			CONFIG.cards[id]= this;
 			card.addClass("card");
-			cb.addClass("control_button");
+			cb.addClass("close_button_outter");
+			cb.html('<div class="close_button_inner">X</div>');
 			this.setSize();
 			this.setPosition();
+			//设置层级
 			this.setZIndex();
 			if(this._type=="img") {
 				this.el.img= $(document.createElement("img"));
@@ -252,15 +266,24 @@
 		buildEvent:function() {
 			var _this= this;
 			this.enableDrage();
-			/*
+			this.el.cb.click(function(e){
+				e.stopPropagation();
+				e.preventDefault();
+				_this.destory();
+				//通知后台
+			})
 			this.el.card.mouseover(function(){
-				_this.el.cb.css("display","block");
+				_this.el.cb.show();
 			});
 			this.el.card.mouseout(function(){
-				_this.el.cb.css("display","none");
+				_this.el.cb.hide();
 			});
-			*/
 			this.enableDrage();
+		},
+		destory:function(){
+			this.el.card.remove();
+			this.commander.destory();
+			delete this;
 		},
 		setImg:function() {
 			this.el.img.attr("src",this._src);
@@ -436,7 +459,7 @@
 					$(window).mouseup(function(e){
 						$(window).unbind();
 						clone.remove();
-						var card1= wrapCard({left:left-50,top:top-50,type:types[i]});
+						wrapCard({left:left-50,top:top-50,type:types[i]});
 					});
 				});
 			});
@@ -471,4 +494,5 @@
 			src:'http://www.webdesignerwall.com/wp-content/uploads/2010/03/pleasefixtheiphone.jpg'
 		});
 		*/
+		
 	});

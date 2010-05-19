@@ -319,3 +319,37 @@
 	.card:active {
 		border:dashed 2px #666;
 	}
+	.close_button_outter {
+		display:none;
+		position:absolute;
+		left:-11px;
+		top:-11px;
+		-webkit-border-radius: 20px;
+		-moz-border-radius: 20px;
+		height:20px;
+		width:20px;	
+		-webkit-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+		-moz-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+		padding:2px;
+		background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DBF7F8), to(#88E1E6));
+		background: -moz-linear-gradient(100% 100% 90deg, #88E1E6, #DBF7F8)	
+	}
+	.close_button_inner {
+		font-weight:bold;
+		font-size:18px;
+		text-align:center;
+		-webkit-border-radius: 20px;
+		-moz-border-radius: 20px;
+		height: 20px;
+		width: 20px;
+		text-shadow: 0px -1px #bbb,0 1px #fff; color:#e3e1e1;
+		background:#fff;
+	}
+	.close_button_outter:hover,.close_button_outter:active{
+		background:#fff;
+	}
+	.close_button_outter:hover .close_button_inner,.close_button_outter:active .close_button_inner{
+		background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DBF7F8), to(#88E1E6));
+		background: -moz-linear-gradient(100% 100% 90deg, #88E1E6, #DBF7F8)			
+	}
+	
