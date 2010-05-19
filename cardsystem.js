@@ -170,12 +170,12 @@
 			$.ajax({
 			  'contentType': 'multipart/form-data',
 			  'beforeSend': function(xhr) {
+				  xhr.open('post', '/pushimg', true);
 				  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
 				  xhr.setRequestHeader('X-File-Name', files[0].fileName);
 				  xhr.setRequestHeader('X-File-Size', files[0].fileSize);
+				  xhr.send(files[0]);
 			  },
-			  type: 'POST',
-			  url: '/pushimg',
 			  success: function(data) {
 			  	//
 			  }
