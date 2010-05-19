@@ -153,6 +153,7 @@
 	            };
 				dragOutter[0].ondrop= function(e) {
 					e.preventDefault();
+					dragOutter.html("&nbsp;Drag a picture here");
 					_this.uploadFiles(e.dataTransfer.files);
 					_this.el.dragOutter.css("background","");
 				};
