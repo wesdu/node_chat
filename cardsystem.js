@@ -95,23 +95,42 @@
 			applyB.addClass("apply_button");
 			applyB.html("Apply");
 			pad.addClass("control_pad");
-			pad.html('<div class="content">\
+			var _html= '<div class="content">\
 					<div class="tab">\
 					width:<input type="text" value=' + this.host._width + ' />\
 					height:<input type="text" value=' + this.host._height + ' />\
 					</div>\
 					<div class="tab">\
 					url:<input type="text" value="" style="width:170px" />\
-					</div>\
-			</div>');
+					</div>';
+			if (typeof FileReader != "undefined") {
+				_html += '<div class="tab">\
+						<div class="drag" id="drag" >&nbsp;Drag a picture here</div>\
+						</div>\
+				</div>';	
+			}
+			else {
+				_html += '<div class="tab">\
+						<div class="drag" >\
+						<input id="dropable_file" type="file" \
+						style="height:100%;width:100%;opacity:0;" \
+						multiple="multiple" \
+						name="dropable_file" /></div>\
+						</div>\
+				</div>';			
+			}
+			pad.html(_html);
 			this.setSize();
 			this.setZIndex();
 			this.setPosition();
+			//拖拽区域
+			this.el.drag= pad.find("#dropable_file");
 			pad.append(applyB);
 			$('body').after(pad);			
 		},
 		buildEvent_img:function() {
 			var _this= this;
+			var drag= this.el.drag;
 			this.el.applyB.click(function(e){
 				//调整大小
 				_this.host._width= parseInt(_this.el.pad.find("input")[0].value,10);
@@ -121,7 +140,43 @@
 				if (_this.host._src) {
 					_this.host.setImg();
 				}
-			});			
+			});
+			if(typeof FileReader != "undefined") {
+				//for firefox 3.6+
+				
+			}
+			else {
+				//for chrome 2.0+
+				(this.el.drag)[0].onchange= function(e){
+					_this.uploadFiles(this.files);
+				};
+				
+				/*
+                drag.bind("dragenter",function (e) {
+					_this.el.drag.css("background","#faa51a");
+					_this.el.drag.html("&nbsp;Release your mouse");
+					e.dataTransfer.dropEffect = 'copy';
+                    e.preventDefault();
+                    return false;
+                });
+                drag.bind("dragover",function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+				drag.bind("drop",function (e) {
+					_this.el.drag.html(typeof e.dataTransfer); //undefined???
+					//_this.uploadFiles(e.dataTransfer.files); // 文件可以通过鼠标的MouseEvent传递过来
+                    e.preventDefault();
+                    return false;
+                });
+				drag.bind("dragleave",function (e) {
+					_this.el.drag.css("background","");
+                });				
+				*/
+			}
+		},
+		uploadFiles:function(files) {
+			alert(files[0].fileName+files[0].fileSize+files[0]);
 		},
 		buildDom_flash:function() {
 			this.el={};

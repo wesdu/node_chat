@@ -185,6 +185,21 @@
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;		
 	}
+	.control_pad .content .drag {
+		cursor:pointer;
+		width:90%;
+		height:50px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border:dashed 1px #666;		
+	}
+	.control_pad .content .drag:hover {
+		width:90%;
+		height:50px;
+		border:solid 1px #666;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+	}
 	.panel {
 		z-index:1;
 		position:absolute;
