@@ -4,7 +4,6 @@ var sys = require("sys");
 var url = require("url");
 var Buffer = require('buffer').Buffer,
 DEBUG = false;
-
 var fu = exports;
 
 var NOT_FOUND = "Not Found\n";
@@ -41,6 +40,16 @@ var server = createServer(function (req, res) {
     };
 
     handler(req, res);
+  }
+  else if(req.method === "POST") {
+      sys.puts("-------------post-------------");
+      req.setBodyEncoding("binary");
+      req.addListener("data",function(chunck){
+	  sys.puts(chunck);
+      });
+      req.addListener("end",function(){
+	  //
+      });
   }
 });
 
