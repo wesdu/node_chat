@@ -166,6 +166,7 @@
 			}
 		},
 		uploadFiles:function(files) {
+			var _this= this;
 			//this.el.dragOutter.html(files[0].fileName+files[0].fileSize+files[0]);
 			//XHR
 			$.ajax({
@@ -178,7 +179,8 @@
 				  xhr.send(files[0]);
 			  },
 			  success: function(data) {
-			  	//
+				_this.host._src= data.src;
+				_this.host.setImg();
 			  }
 			});
 		},
