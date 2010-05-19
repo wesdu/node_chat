@@ -185,7 +185,7 @@
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;		
 	}
-	.control_pad .content .drag {
+	.control_pad .content .drag_outter {
 		cursor:pointer;
 		width:90%;
 		height:50px;
@@ -193,7 +193,12 @@
 		-moz-border-radius: 3px;
 		border:dashed 1px #666;		
 	}
-	.control_pad .content .drag:hover {
+	.control_pad .content .drag_input {
+		height:100%;
+		width:100%;
+		opacity:0;	
+	}
+	.control_pad .content .drag_outter:hover {
 		width:90%;
 		height:50px;
 		border:solid 1px #666;
