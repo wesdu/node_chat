@@ -135,6 +135,8 @@ fu.get("/who", function (req, res) {
 
 fu.get("/join", function (req, res) {
   var nick = qs.parse(url.parse(req.url).query).nick;
+  var color = qs.parse(url.parse(req.url).query).color;
+  var avatar = qs.parse(url.parse(req.url).query).avatar;
   if (nick == null || nick.length == 0) {
     res.simpleJSON(400, {error: "Bad nick."});
     return;
@@ -146,7 +148,6 @@ fu.get("/join", function (req, res) {
   }
 
   //sys.puts("connection: " + nick + "@" + res.connection.remoteAddress);
-
   channel.appendMessage(session.nick, "join");
   res.simpleJSON(200, { id: session.id, nick: session.nick});
 });
