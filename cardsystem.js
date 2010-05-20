@@ -592,7 +592,7 @@
             e.preventDefault();
             return false;
         };
-		user_avatar[0].ondrop= function(e) {
+	user_avatar[0].ondrop= function(e) {
 			e.preventDefault();
 			dropped=true;
 			//do something
