@@ -636,6 +636,7 @@
 				}
 		   		CONFIG.name= option.name;
 				CONFIG.id   = session.id;
+				longPoll();
 		   }
         });
 		//TODO
