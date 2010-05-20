@@ -411,11 +411,31 @@
 					}
 				});
 				$(window).mouseup(function(e){
-					if(_this.isShortClick) {
+					if (_this.isShortClick) {
 						_this.toEditorMode();
-					}else {
-						jQuery.get("/send", {id: CONFIG.id, text: {position:{left:_this._left,right:_this._right}}}
-						, function (data) { }, "json");
+					}
+					else {
+						$.ajax({
+							cache: false,
+							type: "GET",
+							dataType: "json",
+							url: "/send",
+							data: {
+								id: CONFIG.id,
+								text: {
+									'position': {
+										left: _this._left,
+										right: _this._right
+									}
+								}
+							},
+							error: function(){
+							
+							},
+							success: function(){
+							
+							}
+						});
 					}
 					$(window).unbind();
 					_this.isShortClick= true;
