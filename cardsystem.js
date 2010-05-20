@@ -547,9 +547,83 @@
 		var fn= Class(_Panel);
 		return new fn(option)
 	};
+	var login= function(option) {
+		alert(option.name);
+	};
+	var pre_login= function() {
+		var user_frame= $("#user_frame"),
+			 user= $("#user"),
+			 user_avatar= $("#user_avatar"),
+			 user_name= $("#user_name"),
+			 user_button_area= $("#user_button_area"),
+			 buttons= user_button_area.find("div"),
+			 user_name_input= $("#user_name_input"),
+			 user_login_button= $("#user_login_button"),
+			 colors=["orange","black","green","blue"],
+			 dropped=false,
+			 color="",
+			 name,
+			 avatar;
+		color= colors[0];
+		user.addClass(color);
+		buttons.each(function(i,dom){
+			$(dom).click(function(e){
+				user.removeClass(color);
+				color= colors[i];
+				user.addClass(color);
+			});
+		});
+		user_login_button.click(function(e){
+			name= user_name_input[0].value||("G"+Math.floor(Math.random()*99999999999).toString());
+			var option= {
+				name:name,
+				color:color,
+				avatar:avatar
+			};
+			login(option);
+		});
+	  	user_avatar[0].ondragenter= function (e) {
+			user_avatar.css("background","#faa51a");
+			e.dataTransfer.dropEffect = 'copy';
+            e.preventDefault();
+            return false;
+        };
+        user_avatar[0].ondragover= function (e) {
+            e.preventDefault();
+            return false;
+        };
+		user_avatar[0].ondrop= function(e) {
+			e.preventDefault();
+			dropped=true;
+			//do something
+			var files= e.dataTransfer.files;
+			$.ajax({
+			  'contentType': 'multipart/form-data',
+			  'beforeSend': function(xhr) {
+				  xhr.open('post', '/pushimg', true);
+				  xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+				  xhr.setRequestHeader('X-File-Name', files[0].fileName);
+				  xhr.setRequestHeader('X-File-Size', files[0].fileSize);
+				  xhr.send(files[0]);
+			  },
+			  dataType: "json",
+			  success: function(data) {
+				user_avatar.css("background","url("+data.src+")");
+			  }
+			});
+			//
+		};
+		user_avatar[0].ondragleave= function (e) {
+			if (!dropped) {
+				user_avatar.css("background", "url(/avatar.jpg)");
+			}
+			dropped= false;
+        };
+	};
 	$(document).ready(function() {
+		pre_login();
   		//ready
-		var panel= wrapPanel({left:20,top:20});
+		//var panel= wrapPanel({left:20,top:20});
 		/*
 		var card1= wrapCard({left:100,top:100});
 		var card2= wrapCard({left:300,top:400,type:'img',
