@@ -10,9 +10,7 @@ var MESSAGE_BACKLOG = 200,
     SESSION_TIMEOUT = 60 * 1000,
     HISTORY= {},
 	STORE_IMG= {};
-if (!this.JSON) {
-    this.JSON = {};
-}
+
 var channel = new function () {
   var messages = [],
       callbacks = [];
