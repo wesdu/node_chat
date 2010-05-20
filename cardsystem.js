@@ -413,6 +413,9 @@
 				$(window).mouseup(function(e){
 					if(_this.isShortClick) {
 						_this.toEditorMode();
+					}else {
+						jQuery.get("/send", {id: CONFIG.id, text: {position:{left:_this._left,right:_this._right}}}
+						, function (data) { }, "json");
 					}
 					$(window).unbind();
 					_this.isShortClick= true;
