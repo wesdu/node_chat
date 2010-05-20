@@ -9,7 +9,7 @@
 	CONFIG.maxID= 1;
 	CONFIG.zIndex= 1;
 	CONFIG.name= null;
-	CONFIG.last_message_time= 0;
+	CONFIG.last_message_time= 1;
 	CONFIG.cards={};
 	//obj包装成Class
 	var Class= function(obj) {
