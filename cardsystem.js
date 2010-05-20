@@ -629,7 +629,7 @@
            , error: function () {
               
              }
-           , success: function() {
+           , success: function(session) {
 				if (session.error) {
 				  //do something
 				  return;
