@@ -1,11 +1,15 @@
 	//card system start
 	var _Card,
 		_ControlPad,
+		_Panel,
+		transmission_errors,
 		CONFIG;
 		
 	CONFIG={};
 	CONFIG.maxID= 1;
 	CONFIG.zIndex= 1;
+	CONFIG.name= null;
+	CONFIG.last_message_time= 0;
 	CONFIG.cards={};
 	//obj包装成Class
 	var Class= function(obj) {
@@ -15,7 +19,7 @@
 		newClass.prototype = obj;
 		return newClass;
 	};
-	var _ControlPad= {
+	_ControlPad= {
 		init:function(host,type){
 			this.type= type;
 			this.host= host;
@@ -273,7 +277,7 @@
 		var fn= Class(_ControlPad);
 		return new fn(host,type);
 	};
-	var _Card= {
+	_Card= {
 		init:function(option){
 			this.formatOption(option);
 			this.buildDom();
@@ -287,6 +291,7 @@
 			this._top = option.top;
 			this._height= option.height||200;
 			this._width= option.width||200;
+			this._id= option.id||null;
 		},
 		buildDom:function() {
 			this.el= {};
@@ -297,10 +302,11 @@
 			var card= this.el.card;
 			var cb= this.el.cb;
 			//每个容器的独立ID
-			var id= CONFIG.maxID++;
+			var id= this._id||CONFIG.name+CONFIG.maxID++;
 			this.id= id;
 			//全局维护
 			CONFIG.cards[id]= this;
+			card.attr("id",id);
 			card.addClass("card");
 			cb.addClass("close_button_outter");
 			cb.html('<div class="close_button_inner">X</div>');
@@ -433,7 +439,7 @@
 			//拉参数
 		}
 	};
-	var _Panel={
+	_Panel={
 		init:function(option){
 			this.formatOption(option);
 			this.buildDom();
@@ -547,8 +553,92 @@
 		var fn= Class(_Panel);
 		return new fn(option)
 	};
+	function addMessage(nick,data,timestamp) {
+		
+	}
+	function userJoin(nick,timestamp) {
+		
+	}
+	function userPart(nick,timestamp) {
+		
+	}
+	function longPoll (data) {
+	  if (transmission_errors > 2) {
+	    //do something
+	    return;
+	  }
+	
+	  //process any updates we may have
+	  //data will be null on the first call of longPoll
+	  if (data && data.messages) {
+	    for (var i = 0; i < data.messages.length; i++) {
+	      var message = data.messages[i];
+	
+	      //track oldest message so we only request newer messages from server
+	      if (message.timestamp > CONFIG.last_message_time)
+	        CONFIG.last_message_time = message.timestamp;
+	
+	      //dispatch new messages to their appropriate handlers
+	      switch (message.type) {
+	        case "msg":
+	          addMessage(message.nick, message.text, message.timestamp);
+	          break;
+	        case "join":
+	          userJoin(message.nick, message.timestamp);
+	          break;
+	        case "part":
+	          userPart(message.nick, message.timestamp);
+	          break;
+	      }
+	    }
+		
+	  }
+	
+	  //make another request
+	  $.ajax({ cache: false
+	         , type: "GET"
+	         , url: "/recv"
+	         , dataType: "json"
+	         , data: { since: CONFIG.last_message_time, id: CONFIG.id }
+	         , error: function () {
+	             transmission_errors += 1;
+	             //don't flood the servers on error, wait 10 seconds before retrying
+	             setTimeout(longPoll, 10*1000);
+	           }
+	         , success: function (data) {
+	             transmission_errors = 0;
+	             //if everything went well, begin another request immediately
+	             //the server will take a long time to respond
+	             //how long? well, it will wait until there is another message
+	             //and then it will return it to us and close the connection.
+	             //since the connection is closed when we get data, we longPoll again
+	             longPoll(data);
+	           }
+	         });
+	}
 	var login= function(option) {
-		alert(option.name);
+		//{name:,color:,avatar:}
+		$("#user_frame").hide();
+		
+		var panel= wrapPanel({left:20,top:20});
+		$.ajax({ cache: false
+           , type: "GET" 
+           , dataType: "json"
+           , url: "/join"
+           , data: option
+           , error: function () {
+              
+             }
+           , success: function() {
+				if (session.error) {
+				  //do something
+				  return;
+				}
+		   		CONFIG.name= option.name;
+				CONFIG.id   = session.id;
+		   }
+        });
+		//TODO
 	};
 	var pre_login= function() {
 		var user_frame= $("#user_frame"),
@@ -563,7 +653,7 @@
 			 dropped=false,
 			 color="",
 			 name,
-			 avatar;
+			 avatar="/avatar.jpg";
 		color= colors[0];
 		user.addClass(color);
 		buttons.each(function(i,dom){
@@ -609,6 +699,7 @@
 			  dataType: "json",
 			  success: function(data) {
 				user_avatar.css("background","url("+data.src+")");
+				avatar=data.src;
 			  }
 			});
 			//
