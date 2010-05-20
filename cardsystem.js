@@ -743,7 +743,7 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 							url: "/send",
 							data: {
 								id: CONFIG.id,
-								text: 'text' //TODO
+								text: JSON.stringify({pos:{left:_this._left,top:_this._top}})
 							},
 							error: function(){
 							
