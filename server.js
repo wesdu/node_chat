@@ -120,6 +120,7 @@ fu.get("/", fu.staticHandler("ui.html"));
 fu.get("/default.css", fu.staticHandler("default.css"));
 fu.get("/cardsystem.js", fu.staticHandler("cardsystem.js"));
 fu.get("/jquery-1.2.6.min.js", fu.staticHandler("jquery-1.2.6.min.js"));
+fu.get("/json.js", fu.staticHandler("json.js"));
 fu.get("/img.png", fu.staticHandler("img.png"));
 fu.get("/sample.png", fu.staticHandler("sample.png"));
 fu.get("/avatar.jpg", fu.staticHandler("avatar.jpg"));
