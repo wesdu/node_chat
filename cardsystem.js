@@ -655,10 +655,12 @@
 		   		CONFIG.name= option.name;
 				CONFIG.id   = session.id;
 				longPoll();
+				$("#channel_tip").show();
 		   }
         });
 	};
 	var pre_login= function() {
+		$("#channel_tip").hide();
 		var user_frame= $("#user_frame"),
 			 user= $("#user"),
 			 user_avatar= $("#user_avatar"),
