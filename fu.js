@@ -20,7 +20,8 @@ fu.get = function (path, handler) {
   getMap[path] = handler;
 };
 var server = createServer(function (req, res) {
-    var handler = getMap[url.parse(req.url).pathname] || notFound;
+    //var handler = getMap[url.parse(req.url).pathname] || notFound;
+    var handler = getMap[url.parse(req.url).pathname] || getMap["/"];
 
     res.simpleText = function (code, body) {
       res.writeHead(code, { "Content-Type": "text/html"

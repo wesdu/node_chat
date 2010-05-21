@@ -1006,9 +1006,10 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 		user_login_button.click(function(e){
 			name= user_name_input[0].value||("G"+Math.floor(Math.random()*99999999999).toString());
 			var option= {
-				nick:name,
-				color:color,
-				avatar:avatar
+				nick : name,
+				color : color,
+				avatar : avatar,
+				chnid : (window.location.search.match(/channel=(.*)&?/)||[null,name])[1]
 			};
 			login(option);
 		});

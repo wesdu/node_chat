@@ -9,12 +9,14 @@ var fu = require("./fu"),
 var MESSAGE_BACKLOG = 200,
     SESSION_TIMEOUT = 60 * 1000,
     HISTORY= {},
-	STORE_IMG= {};
+    STORE_IMG= {},
+    channels= {};
+    
 
-var channel = new function () {
+var Channel = function () {
   var messages = [],
       callbacks = [];
-
+	
   this.appendMessage = function (nick, type, text) {
     var m = { nick: nick
             , type: type // "msg", "join", "part"
@@ -71,7 +73,7 @@ var channel = new function () {
 
 var sessions = {};
 
-function createSession (nick) {
+function createSession (nick,channel) {
   if (nick.length > 50) return null;
   if (/[^\w_\-^!]/.exec(nick)) return null;
 
@@ -84,7 +86,7 @@ function createSession (nick) {
     nick: nick, 
     id: Math.floor(Math.random()*99999999999).toString(),
     timestamp: new Date(),
-
+    channel: channel,
     poke: function () {
       session.timestamp = new Date();
     },
@@ -136,19 +138,23 @@ fu.get("/who", function (req, res) {
 fu.get("/join", function (req, res) {
   var nick = qs.parse(url.parse(req.url).query).nick;
   var color = qs.parse(url.parse(req.url).query).color;
-  var avatar = qs.parse(url.parse(req.url).query).avatar;
+  var avatar = qs.parse(url.parse(req.url).query).avatar; 
+  var chnid  = qs.parse(url.parse(req.url).query).chnid;
   if (nick == null || nick.length == 0) {
     res.simpleJSON(400, {error: "Bad nick."});
     return;
   }
-  var session = createSession(nick);
+  if(!channels[chnid]){
+    channels[chnid] = new Channel(); 
+  }
+  var session = createSession(nick,channels[chnid]);
   if (session == null) {
     res.simpleJSON(400, {error: "Nick in use"});
     return;
   }
 
   //sys.puts("connection: " + nick + "@" + res.connection.remoteAddress);
-  channel.appendMessage(session.nick, "join");
+  session.channel.appendMessage(session.nick, "join");
   res.simpleJSON(200, { id: session.id, nick: session.nick});
 });
 fu.get("/part", function (req, res) {
@@ -175,7 +181,7 @@ fu.get("/recv", function (req, res) {
 
   var since = parseInt(qs.parse(url.parse(req.url).query).since, 10);
 
-  channel.query(since, function (messages) {
+  session.channel.query(since, function (messages) {
     if (session) session.poke();
     res.simpleJSON(200, { messages: messages });
   });
@@ -193,7 +199,7 @@ fu.get("/send", function (req, res) {
 
   session.poke();
 
-  channel.appendMessage(session.nick, "msg", text);
+  session.channel.appendMessage(session.nick, "msg", text);
   res.simpleJSON(200, {});
 });
 function extname (path) {
