@@ -155,7 +155,7 @@ fu.get("/join", function (req, res) {
   }
 
   //sys.puts("connection: " + nick + "@" + res.connection.remoteAddress);
-  session.channel.appendMessage(session.nick, "join");
+  session.channel.appendMessage(session.nick, "join", JSON.stringify({color:color,avatar:avatar}) );
   res.simpleJSON(200, { id: session.id, nick: session.nick});
 });
 fu.get("/part", function (req, res) {
