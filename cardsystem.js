@@ -3,6 +3,7 @@
 		_ControlPad,
 		_Panel,
 		transmission_errors,
+		channelUrl,
 		CONFIG;
 		
 	CONFIG={};
@@ -11,6 +12,7 @@
 	CONFIG.name= null;
 	CONFIG.last_message_time= 1;
 	CONFIG.cards={};
+	
 	//obj包装成Class
 	var Class= function(obj) {
 		var newClass = function() {
@@ -654,7 +656,8 @@
 				}
 		   		CONFIG.name= option.name;
 				CONFIG.id   = session.id;
-				longPoll();
+				longPoll();	
+				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
 				$("#channel_tip").show();
 		   }
         });
@@ -685,11 +688,12 @@
 		});
 		user_login_button.click(function(e){
 			name= user_name_input[0].value||("G"+Math.floor(Math.random()*99999999999).toString());
+			channelUrl = (window.location.search.match(/channel=(.*)&?/)||[null,name])[1];
 			var option= {
 				nick : name,
 				color : color,
 				avatar : avatar,
-				chnid : (window.location.search.match(/channel=(.*)&?/)||[null,name])[1]
+				chnid : channelUrl
 			};
 			login(option);
 		});
