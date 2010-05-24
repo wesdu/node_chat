@@ -364,12 +364,13 @@
 			this.enableDrage();
 		},
 		destory:function(){
+			//TODO
 			this.el.card.remove();
 			if (this.commander) {
 				this.commander.destory();
 			}
 			this.push({type:"close",data:{id:this.id}});
-			delete this;
+			delete CONFIG.cards[this.id];
 		},
 		setImg:function() {
 			this.el.img.attr("src",this._src);
@@ -604,7 +605,7 @@
 		return new fn(option)
 	};
 	function getCard(id) {
-		return CONFIG.cards[id];
+		return CONFIG.cards[id]||null;
 	}
 	function addMessage(nick,data,timestamp) {
 		//TODO
@@ -619,7 +620,12 @@
 					wrapCard(data.data);
 					break;
 				case "pos":
-					getCard(_data.id).setPosition({left:_data.left,top:_data.top});
+					if (getCard(_data.id)) {
+						getCard(_data.id).setPosition({
+							left: _data.left,
+							top: _data.top
+						});
+					}
 					break;
 				case "apply":
 				
