@@ -699,10 +699,14 @@
 					}
 					break;
 				case "apply":
-				
+					if (getCard(_data.id)) {
+						getCard(_data.id).apply(_data);
+					}
 					break;
 				case "close":
-					getCard(_data.id).destory();
+					if (getCard(_data.id)) {
+						getCard(_data.id).destory();
+					}
 					break;
 				default:
 				
