@@ -288,6 +288,8 @@
 			this.formatOption(option);
 			this.buildDom();
 			this.buildEvent();
+			this.option.id= this.id;
+			this.push({type:"create",data:this.option});
 		},
 		formatOption: function(option) {
 			this.option= option;
@@ -555,11 +557,6 @@
 						$(window).unbind();
 						clone.remove();
 						wrapCard({left:left-50,top:top-50,type:types[i]});
-						_this.push({type:"create",data: {
-							left: left - 50,
-							top: top - 50,
-							type: types[i]
-						}});
 					});
 				});
 			});
@@ -575,28 +572,7 @@
 		},
 		shortClick:function(){
 			this.el.body.toggle();
-		},
-		push:function(option,success,error) {
-			//json2string
-			var _option = JSON.stringify(option);
-			//推参数
-			$.ajax({
-				cache: false,
-				type: "GET",
-				dataType: "json",
-				url: "/send",
-				data: {
-					id: CONFIG.id,
-					text: _option
-				},
-				error: error||function(){
-				
-				},
-				success: success||function(){
-				
-				}
-			});
-		},
+		}
 	};
 	var wrapCard= function(option) {
 		var fn= Class(_Card);
@@ -606,17 +582,36 @@
 		var fn= Class(_Panel);
 		return new fn(option)
 	};
+	function getCard(id) {
+		return CONFIG.cards[id]||null;
+	}
 	function addMessage(nick,data,timestamp) {
 		//TODO
 		var data= JSON.parse(data);
-		if(data.type=="msg") {
-			messagebox.appendMsg(nick,data.text);
+		if (data.type == "msg") {
+			messagebox.appendMsg(nick, data.text);
 		}
-		else if(data.type=="create") {
-			//
-			if (nick != CONFIG.name) {
-				wrapCard(data.data);
+		else if (nick != CONFIG.name) {
+			switch(data.type) {
+				case "create":
+					wrapCard(data.data);
+					break;
+				case "change":
+				
+					break;
+				case "apply":
+				
+					break;
+				default:
+				
 			}
+				if (data.type == "create") {
+					
+				}
+			
+			else 
+				if (data.type == "change") {
+				}
 		}
 	}
 	function userJoin(nick,data,timestamp) {
