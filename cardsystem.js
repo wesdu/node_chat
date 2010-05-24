@@ -666,7 +666,8 @@
 		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
 				$("#channel_tip").html("The Channel Url: http://gin.com/?channel="+channelUrl);
-				$("#channel_tip").show();				
+				$("#channel_tip").show();	
+				$("#message_icon").show();		
 				longPoll();
 		   }
         });
@@ -754,6 +755,7 @@
 		var message_icon= $("#message_icon");
 		var message_count= $("#message_count");
 		message_box.__show= false;
+		message_icon.hide();
 		var _send= function() {
 			
 		};
@@ -763,8 +765,9 @@
 			}
 			else {
 				var i= parseInt(message_count.html());
-				i= i++;
-				message_count.html(i);
+				alert(i);
+				i= i+1;
+				message_count.html(""+i);
 			}
 		};
 		this.renderMsg= function(nick,text) {
