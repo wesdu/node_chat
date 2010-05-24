@@ -684,9 +684,7 @@
 	}
 	var login= function(option) {
 		//{nick:,color:,avatar:,chnid}
-		$("#user_frame").hide();
 		
-		var panel= wrapPanel({left:20,top:20});
 		$.ajax({ cache: false
            , type: "GET" 
            , dataType: "json"
@@ -698,8 +696,11 @@
            , success: function(session) {
 				if (session.error) {
 				  //do something
+				  alert(session.error);
 				  return;
 				}
+				$("#user_frame").hide();
+				var panel= wrapPanel({left:20,top:20});
 		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
 				$("#channel_tip").html("The Channel Url: http://gin.com/?channel="+channelUrl);
@@ -754,7 +755,7 @@
             e.preventDefault();
             return false;
         };
-	user_avatar[0].ondrop= function(e) {
+		user_avatar[0].ondrop= function(e) {
 			e.preventDefault();
 			dropped=true;
 			//do something
