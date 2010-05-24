@@ -644,7 +644,7 @@
 	         });
 	}
 	var login= function(option) {
-		//{name:,color:,avatar:}
+		//{nick:,color:,avatar:,chnid}
 		$("#user_frame").hide();
 		
 		var panel= wrapPanel({left:20,top:20});
@@ -666,7 +666,7 @@
 				longPoll();	
 				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
 				$("#channel_tip").show();
-				CONFIG.users[option.name]= {color:option.color, avatar:option.avatar};
+				CONFIG.users[option.nick]= {color:option.color, avatar:option.avatar};
 		   }
         });
 	};
