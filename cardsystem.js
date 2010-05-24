@@ -154,19 +154,30 @@
 			pad.append(applyB);
 			$('body').after(pad);			
 		},
+		fillImg:function(obj) {
+			//TODO
+			this.el.pad.find("input")[0].value= obj.width;
+			this.el.pad.find("input")[1].value= obj.height;
+			this.el.pad.find("input")[2].value= obj.src;
+		},
 		buildEvent_img:function() {
+			var param= {};
 			var _this= this;
 			var dragOutter= this.el.dragOutter;
 			var dragInput=  this.el.dragInput;
 			this.el.applyB.click(function(e){
 				//调整大小
 				_this.host._width= parseInt(_this.el.pad.find("input")[0].value,10);
+				param.width= _this.host._width;
 				_this.host._height= parseInt(_this.el.pad.find("input")[1].value,10);
+				param.height= _this.host._height;
 				_this.host.setSize();
 				_this.host._src= _this.el.pad.find("input")[2].value;
 				if (_this.host._src) {
 					_this.host.setImg();
+					param.src= _this.host._src;
 				}
+				_this.push({type:"apply", data:param});
 			});
 			if(typeof FileReader != "undefined") {
 				//for firefox 3.6+
@@ -219,6 +230,7 @@
 			  success: function(data) {
 				_this.host._src= data.src;
 				_this.host.setImg();
+				_this.push({type:"apply",data:{id:_this.host.id,src:_this.host.src}});
 			  }
 			});
 		},
@@ -271,7 +283,6 @@
 				param.width= _this.host._width;
 				param.height= _this.host._height;
 				param.id= _this.host.id;
-				//TODO
 				_this.push({type:"apply",data:param})
 			});					
 		},
@@ -421,6 +432,7 @@
 				_this.el.cb.hide();
 			});
 			this.enableDrage();
+			this.commander = wrapControlPad(this,this._type);
 		},
 		destory:function(){
 			this.el.card.remove();
@@ -505,9 +517,14 @@
 					}					
 					break;
 				case 'img':
+					this.setSize(obj.width,obj.height);
+					this.setImg(obj.src);
+					if(this.commander) {
+						this.commander.fillImg(obj);
+					}
 					break;
 				default:
-					
+					//
 			}
 		},
 		setPosition:function(obj) {
@@ -570,7 +587,7 @@
 		},
 		toEditorMode:function() {
 			if (!this.commander) {
-				this.commander = wrapControlPad(this,this._type);
+				
 			}
 			else {
 				this.commander.toggle();
