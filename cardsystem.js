@@ -83,7 +83,7 @@
 			});
 			this.el.applyB.click(function(e){
 				//调整大小
-				var param= null;
+				var param= {};
 				_this.host._width= parseInt(_this.el.pad.find("input")[0].value,10);
 				param.width= _this.host._width;
 				_this.host._height= parseInt(_this.el.pad.find("input")[1].value,10);
