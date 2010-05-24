@@ -288,8 +288,7 @@
 			this.formatOption(option);
 			this.buildDom();
 			this.buildEvent();
-			this.option.id= this.id;
-			this.push({type:"create",data:this.option});
+			
 		},
 		formatOption: function(option) {
 			this.option= option;
@@ -310,7 +309,14 @@
 			var card= this.el.card;
 			var cb= this.el.cb;
 			//每个容器的独立ID
-			var id= this._id||CONFIG.name+CONFIG.maxID++;
+			var id;
+			if(this._id) {
+				id= this._id;
+			}else {
+				id= CONFIG.name+CONFIG.maxID++;
+				this.option.id= id;
+				this.push({type:"create",data:this.option});
+			}
 			this.id= id;
 			//全局维护
 			CONFIG.cards[id]= this;
