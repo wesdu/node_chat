@@ -15,6 +15,7 @@
 	CONFIG.last_message_time= 1;
 	CONFIG.cards={};
 	CONFIG.users={};
+
 	
 	//obj包装成Class
 	var Class= function(obj) {
@@ -577,10 +578,13 @@
 		return new fn(option)
 	};
 	function addMessage(nick,data,timestamp) {
-		
+		if(data.type=="msg") {
+			messagebox.appendMsg(nick,data.text);
+		}
 	}
 	function userJoin(nick,data,timestamp) {
-		alert(data)
+		//{color,avatar}
+		CONFIG.users[nick]= data;
 	}
 	function userPart(nick,timestamp) {
 		
@@ -740,6 +744,7 @@
         };
 	};
 	Messagebox= function() {
+		var _this= this;
 		var message_box= $("#message_box");
 		var message_field= $("#message_field");
 		var send_buton= $("#send_buton");
@@ -750,7 +755,21 @@
 			
 		};
 		this.renderMsg= function(nick,text) {
-			
+			var data= CONFIG.users[nick];
+			var div= $(document.createElement("div"));
+			div.attr("class","message_unit");
+			div.html('<div class="message_head">\
+					<img class="avatar" alt="" src="'+data.avatar+'" />\
+					<span>'+nick+':</span>\
+				</div>\
+				<div class="text_field '+data.color+'">'+text+'\
+					<div class="before '+data.color+'></div>\
+				</div>');
+			return div;
+		};
+		this.appendMsg= function(nick,text) {
+			var div= this.renderMsg(nick,text);
+			message_field.after(div);
 		};
 		this.sentMsg= function(nick,text) {
 			//look up user info
@@ -768,7 +787,7 @@
 					
 				},
 				success: function(){
-				
+					appendMsg(nick,text);
 				}
 			});
 			
@@ -786,7 +805,9 @@
 			}
 		});
 		send_input.keydown(function(e){
-			
+			if(e.keycode=="13") {
+				_this.sentMsg(CONFIG.name, send_input[0].value);
+			}
 		});
 		
 	};
