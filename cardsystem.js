@@ -602,8 +602,6 @@
 		return new fn(option)
 	};
 	function getCard(id) {
-		alert(id)
-		alert(CONFIG.cards[id])
 		return CONFIG.cards[id];
 	}
 	function addMessage(nick,data,timestamp) {
@@ -625,7 +623,7 @@
 				
 					break;
 				case "close":
-					getCard(data.id).destory();
+					getCard(_data.id).destory();
 					break;
 				default:
 				
