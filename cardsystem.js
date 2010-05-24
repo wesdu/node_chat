@@ -555,6 +555,11 @@
 						$(window).unbind();
 						clone.remove();
 						wrapCard({left:left-50,top:top-50,type:types[i]});
+						_this.push({type:"create",data: {
+							left: left - 50,
+							top: top - 50,
+							type: types[i]
+						}});
 					});
 				});
 			});
@@ -570,7 +575,28 @@
 		},
 		shortClick:function(){
 			this.el.body.toggle();
-		}
+		},
+		push:function(option,success,error) {
+			//json2string
+			var _option = JSON.stringify(option);
+			//推参数
+			$.ajax({
+				cache: false,
+				type: "GET",
+				dataType: "json",
+				url: "/send",
+				data: {
+					id: CONFIG.id,
+					text: _option
+				},
+				error: error||function(){
+				
+				},
+				success: success||function(){
+				
+				}
+			});
+		},
 	};
 	var wrapCard= function(option) {
 		var fn= Class(_Card);
@@ -581,12 +607,16 @@
 		return new fn(option)
 	};
 	function addMessage(nick,data,timestamp) {
+		//TODO
 		var data= JSON.parse(data);
 		if(data.type=="msg") {
 			messagebox.appendMsg(nick,data.text);
 		}
 		else if(data.type=="create") {
 			//
+			if (nick != CONFIG.name) {
+				wrapCard(data.data);
+			}
 		}
 	}
 	function userJoin(nick,data,timestamp) {
