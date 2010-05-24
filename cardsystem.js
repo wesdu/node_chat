@@ -501,7 +501,7 @@
 					this.setFontSize(obj.size);
 					this.setValue(obj.value);
 					if(this.commander) {
-						this.commander.fillFLash(obj);
+						this.commander.fillText(obj);
 					}					
 					break;
 				case 'img':
