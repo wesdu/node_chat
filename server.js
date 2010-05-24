@@ -124,7 +124,7 @@ fu.get("/json.js", fu.staticHandler("json.js"));
 fu.get("/img.png", fu.staticHandler("img.png"));
 fu.get("/sample.png", fu.staticHandler("sample.png"));
 fu.get("/avatar.jpg", fu.staticHandler("avatar.jpg"));
-
+fu.get("/mail-icon.png", fu.staticHandler("mail-icon.png"));
 
 fu.get("/who", function (req, res) {
   var nicks = [];
