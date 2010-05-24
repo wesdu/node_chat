@@ -586,6 +586,7 @@
 	function userJoin(nick,data,timestamp) {
 		//{color,avatar}
 		CONFIG.users[nick]= JSON.parse(data);
+		messagebox.appendMsg(nick,"我来了～");
 	}
 	function userPart(nick,timestamp) {
 		
@@ -788,7 +789,7 @@
 					
 				},
 				success: function(){
-					_this.appendMsg(nick,text);
+					//_this.appendMsg(nick,text);
 				}
 			});
 			
