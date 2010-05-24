@@ -661,7 +661,7 @@
 				  //do something
 				  return;
 				}
-		   		CONFIG.name= option.name;
+		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
 				longPoll();	
 				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
@@ -770,7 +770,7 @@
 		};
 		this.appendMsg= function(nick,text) {
 			var div= this.renderMsg(nick,text);
-			message_field.after(div);
+			message_field.append(div);
 		};
 		this.sentMsg= function(nick,text) {
 			//look up user info
