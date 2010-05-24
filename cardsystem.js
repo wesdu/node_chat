@@ -787,7 +787,7 @@
 					
 				},
 				success: function(){
-					appendMsg(nick,text);
+					_this.appendMsg(nick,text);
 				}
 			});
 			
