@@ -602,7 +602,9 @@
 		return new fn(option)
 	};
 	function getCard(id) {
-		return CONFIG.cards[id]||null;
+		alert(id)
+		alert(CONFIG.cards[id])
+		return CONFIG.cards[id];
 	}
 	function addMessage(nick,data,timestamp) {
 		//TODO
