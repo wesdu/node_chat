@@ -664,7 +664,7 @@
 				}
 		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
-				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
+				$("#channel_tip").html("The Channel Url: http://gin.com/?channel="+channelUrl);
 				$("#channel_tip").show();				
 				longPoll();
 		   }
