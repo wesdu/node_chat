@@ -663,10 +663,10 @@
 				}
 		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
-				longPoll();	
+				CONFIG.users[CONFIG.name]= {color:option.color, avatar:option.avatar};
 				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
-				$("#channel_tip").show();
-				CONFIG.users[option.nick]= {color:option.color, avatar:option.avatar};
+				$("#channel_tip").show();				
+				longPoll();
 		   }
         });
 	};
