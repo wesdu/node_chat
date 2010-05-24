@@ -315,6 +315,7 @@
 			}else {
 				id= CONFIG.name+CONFIG.maxID++;
 				this.option.id= id;
+				//TODO
 				this.push({type:"create",data:this.option});
 			}
 			this.id= id;
@@ -365,6 +366,7 @@
 		destory:function(){
 			this.el.card.remove();
 			this.commander.destory();
+			this.push({type:"close",data:{id:this.id}});
 			delete this;
 		},
 		setImg:function() {
@@ -394,7 +396,11 @@
 				this.commander.reFlow();
 			}
 		},
-		setPosition:function() {
+		setPosition:function(obj) {
+			if(obj) {
+				this._left= obj.left;
+				this._top= obj.top;
+			}
 			var card= this.el.card;
 			card.css("left",this._left);
 			card.css("top",this._top);
@@ -429,7 +435,14 @@
 						_this.toEditorMode();
 					}
 					else {
-						_this.push({type:'change', id:_this.id, pos:{left:_this._left,top:_this._top}});
+						_this.push({
+							type: 'pos',
+							data: {
+								id: _this.id,
+								left: _this._left,
+								top: _this._top
+							}
+						});
 					}
 					$(window).unbind();
 					_this.isShortClick= true;
@@ -602,11 +615,14 @@
 				case "create":
 					wrapCard(data.data);
 					break;
-				case "change":
-				
+				case "pos":
+					getCard(data.id).setPosition({left:data.left,top:data.top});
 					break;
 				case "apply":
 				
+					break;
+				case "close":
+					getCard(data.id).destory();
 					break;
 				default:
 				
