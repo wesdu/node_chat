@@ -613,12 +613,13 @@
 			messagebox.appendMsg(nick, data.text);
 		}
 		else if (nick != CONFIG.name) {
+			var _data= data.data;
 			switch(data.type) {
 				case "create":
 					wrapCard(data.data);
 					break;
 				case "pos":
-					getCard(data.id).setPosition({left:data.left,top:data.top});
+					getCard(_data.id).setPosition({left:_data.left,top:_data.top});
 					break;
 				case "apply":
 				
