@@ -426,7 +426,7 @@
 							url: "/send",
 							data: {
 								id: CONFIG.id,
-								text: JSON.stringify({pos:{left:_this._left,top:_this._top}})
+								text: JSON.stringify({type:'change', id:_this.id, pos:{left:_this._left,top:_this._top}})
 							},
 							error: function(){
 							
@@ -751,10 +751,8 @@
 		this.appendMsg= function(nick,text) {
 			//look up user info
 			//insert text
-			
-			
-			
-			
+		
+						
 			message_field[0].scrollTop = message_field[0].scrollHeight;
 		};
 		message_icon.click(function(e){
