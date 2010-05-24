@@ -752,9 +752,20 @@
 		var send_buton= $("#send_buton");
 		var send_input= $("#send_input");
 		var message_icon= $("#message_icon");
+		var message_count= $("#message_count");
 		message_box.__show= false;
 		var _send= function() {
 			
+		};
+		this.messageCount= function() {
+			if(message_box.__show) {
+				
+			}
+			else {
+				var i= parseInt(message_count.html());
+				i= i++;
+				message_count.html(i);
+			}
 		};
 		this.renderMsg= function(nick,text) {
 			var data= CONFIG.users[nick];
@@ -772,6 +783,8 @@
 		this.appendMsg= function(nick,text) {
 			var div= this.renderMsg(nick,text);
 			message_field.append(div);
+			message_field[0].scrollTop = message_field[0].scrollHeight;
+			this.messageCount();
 		};
 		this.sentMsg= function(nick,text) {
 			//look up user info
@@ -801,6 +814,7 @@
 				send_input.focus();
 				message_field[0].scrollTop = message_field[0].scrollHeight;
 				message_box.__show= true;
+				message_count.html("0");
 			}else {
 				message_box.hide();
 				message_box.__show= false;
