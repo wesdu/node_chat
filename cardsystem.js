@@ -578,6 +578,7 @@
 		return new fn(option)
 	};
 	function addMessage(nick,data,timestamp) {
+		var data= JSON.parse(data);
 		if(data.type=="msg") {
 			messagebox.appendMsg(nick,data.text);
 		}
@@ -763,7 +764,7 @@
 					<span>'+nick+':</span>\
 				</div>\
 				<div class="text_field '+data.color+'">'+text+'\
-					<div class="before '+data.color+'></div>\
+					<div class="before '+data.color+'"></div>\
 				</div>');
 			return div;
 		};
