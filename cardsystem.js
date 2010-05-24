@@ -421,22 +421,7 @@
 						_this.toEditorMode();
 					}
 					else {
-						$.ajax({
-							cache: false,
-							type: "GET",
-							dataType: "json",
-							url: "/send",
-							data: {
-								id: CONFIG.id,
-								text: JSON.stringify({type:'change', id:_this.id, pos:{left:_this._left,top:_this._top}})
-							},
-							error: function(){
-							
-							},
-							success: function(){
-							
-							}
-						});
+						_this.push({type:'change', id:_this.id, pos:{left:_this._left,top:_this._top}});
 					}
 					$(window).unbind();
 					_this.isShortClick= true;
@@ -456,8 +441,26 @@
 				this.commander.toggle();
 			}
 		},
-		push:function() {
+		push:function(option,success,error) {
+			//json2string
+			var _option = JSON.stringify(option);
 			//推参数
+			$.ajax({
+				cache: false,
+				type: "GET",
+				dataType: "json",
+				url: "/send",
+				data: {
+					id: CONFIG.id,
+					text: _option
+				},
+				error: error||function(){
+				
+				},
+				success: success||function(){
+				
+				}
+			});
 		},
 		pull:function() {
 			//拉参数
@@ -581,6 +584,9 @@
 		var data= JSON.parse(data);
 		if(data.type=="msg") {
 			messagebox.appendMsg(nick,data.text);
+		}
+		else if(data.type=="create") {
+			//
 		}
 	}
 	function userJoin(nick,data,timestamp) {
@@ -756,9 +762,6 @@
 		var message_count= $("#message_count");
 		message_box.__show= false;
 		message_icon.hide();
-		var _send= function() {
-			
-		};
 		this.messageCount= function() {
 			if(message_box.__show) {
 				
@@ -829,6 +832,12 @@
 				}
 				send_input[0].value = "";
 			}
+		});
+		send_buton.click(function(e){
+			if (send_input[0].value != "") {
+				_this.sentMsg(CONFIG.name, send_input[0].value);
+			}
+			send_input[0].value = "";			
 		});
 		
 	};
