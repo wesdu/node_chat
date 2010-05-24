@@ -100,7 +100,7 @@
 				_this.host._value= _this.el.pad.find("textarea")[0].value;
 				param.value= _this.host._value;
 				_this.host.setValue();
-				param.id= _this.id;
+				param.id= _this.host.id;
 				_this.push({type:"apply",data:param});
 			});
 		},
