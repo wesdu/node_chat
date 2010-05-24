@@ -652,6 +652,7 @@
 		float:right;
 	}
 	.message_box .input_field .send_buton{
+		cursor:pointer;
 		width:40px;
 		height:22px;
 		color:#ffffff;
