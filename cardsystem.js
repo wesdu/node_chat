@@ -70,7 +70,7 @@
 			var _this= this;
 			var colorButtons= this.el.pad.find("h3");
 			var colors= ["#F7921D","#0096CF","#699E21","#3A3A3A"];
-			var color;
+			var color=colors[0];
 			$(colorButtons).each(function(i,dom){
 				$(dom).click(function(e){	
 					if(_this.__lastColorButton) {
@@ -83,18 +83,44 @@
 			});
 			this.el.applyB.click(function(e){
 				//调整大小
+				var param= null;
 				_this.host._width= parseInt(_this.el.pad.find("input")[0].value,10);
+				param.width= _this.host._width;
 				_this.host._height= parseInt(_this.el.pad.find("input")[1].value,10);
+				param.height= _this.host._height;
 				_this.host.setSize();
 				//获取字体大小
 				var fontSize= parseInt(_this.el.pad.find("input")[2].value,10);
+				param.size= fontSize;
 				_this.host._fontSize= fontSize;
 				_this.host.setFontSize();
 				_this.host._fontColor= color;
+				param.color= color;
 				_this.host.setFontColor();
 				_this.host._value= _this.el.pad.find("textarea")[0].value;
+				param.value= _this.host._value;
 				_this.host.setValue();
+				_this.push({type:"apply",data:param})
 			});
+		},
+		fillText:function(obj) {
+			var colors= ["#F7921D","#0096CF","#699E21","#3A3A3A"];
+			this.el.pad.find("input")[0].value= obj.width;
+			this.el.pad.find("input")[1].value= obj.height;
+			this.el.pad.find("input")[2].value= obj.size;
+			//color obj.color;
+			for (var i=0;i<4;i++) {
+				if(colors[i]==obj.color) {
+					break;
+				}
+			}
+			var dom= this.el.pad.find("h3")[i];
+			if(this.__lastColorButton) {
+				$(this.__lastColorButton).removeClass("select");
+			}
+			$(dom).addClass("select");
+			this.__lastColorButton= dom;
+			this.el.pad.find("textarea")[0].value= obj.value;
 		},
 		buildDom_img:function() {
 			this.el={};
@@ -418,8 +444,8 @@
 			card.css("width",this._width);			
 		},
 		setSize:function(width,height) {
-			this.setHeight(width||null);
-			this.setWidth(height||null);
+			this.setHeight(height||null);
+			this.setWidth(width||null);
 			if(this.commander) {
 				this.commander.reFlow();
 			}
@@ -446,10 +472,16 @@
 			}
 			$(this.el.content).html(this._value);
 		},
-		setFontSize:function() {
+		setFontSize:function(size) {
+			if(size) {
+				this._fontSize= size;
+			}			
 			$(this.el.content).css("fontSize",this._fontSize);
 		},
-		setFontColor:function() {
+		setFontColor:function(color) {
+			if(color) {
+				this._fontColor= color;
+			}		
 			$(this.el.content).css("color",this._fontColor);
 		},
 		apply:function(obj) {
@@ -463,6 +495,13 @@
 					}
 					break;
 				case 'text':
+					this.setSize(obj.width,obj.height);
+					this.setFontColor(obj.color);
+					this.setFontSize(obj.size);
+					this.setValue(obj.value);
+					if(this.commander) {
+						this.commander.fillFLash(obj);
+					}					
 					break;
 				case 'img':
 					break;
