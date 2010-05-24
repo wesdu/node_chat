@@ -824,7 +824,10 @@
 		});
 		send_input.keydown(function(e){
 			if(e.which=="13") {
-				_this.sentMsg(CONFIG.name, send_input[0].value);
+				if (send_input[0].value != "") {
+					_this.sentMsg(CONFIG.name, send_input[0].value);
+				}
+				send_input[0].value = "";
 			}
 		});
 		
