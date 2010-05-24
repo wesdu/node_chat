@@ -666,6 +666,7 @@
 				longPoll();	
 				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
 				$("#channel_tip").show();
+				CONFIG.users[option.name]= {color:option.color, avatar:option.avatar};
 		   }
         });
 	};
