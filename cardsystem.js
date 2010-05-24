@@ -805,7 +805,7 @@
 			}
 		});
 		send_input.keydown(function(e){
-			if(e.keycode=="13") {
+			if(e.KeyCode=="13") {
 				_this.sentMsg(CONFIG.name, send_input[0].value);
 			}
 		});
