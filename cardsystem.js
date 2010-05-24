@@ -584,7 +584,7 @@
 	}
 	function userJoin(nick,data,timestamp) {
 		//{color,avatar}
-		CONFIG.users[nick]= data;
+		CONFIG.users[nick]= JSON.parse(data);
 	}
 	function userPart(nick,timestamp) {
 		
@@ -663,7 +663,6 @@
 				}
 		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
-				CONFIG.users[CONFIG.name]= {color:option.color, avatar:option.avatar};
 				$("#channel_tip").html("The Channel Url: http://gin.com/?chnid="+channelUrl);
 				$("#channel_tip").show();				
 				longPoll();
