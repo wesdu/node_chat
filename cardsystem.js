@@ -765,7 +765,6 @@
 			}
 			else {
 				var i= parseInt(message_count.html());
-				alert(i);
 				i= i+1;
 				message_count.html(""+i);
 			}
