@@ -14,6 +14,7 @@
 	CONFIG.name= null;
 	CONFIG.last_message_time= 1;
 	CONFIG.cards={};
+	CONFIG.users={};
 	
 	//obj包装成Class
 	var Class= function(obj) {
@@ -578,8 +579,8 @@
 	function addMessage(nick,data,timestamp) {
 		
 	}
-	function userJoin(nick,timestamp) {
-		
+	function userJoin(nick,data,timestamp) {
+		alert(data)
 	}
 	function userPart(nick,timestamp) {
 		
@@ -606,7 +607,7 @@
 	          addMessage(message.nick, message.text, message.timestamp);
 	          break;
 	        case "join":
-	          userJoin(message.nick, message.timestamp);
+	          userJoin(message.nick, message.text, message.timestamp);
 	          break;
 	        case "part":
 	          userPart(message.nick, message.timestamp);
@@ -748,11 +749,29 @@
 		var _send= function() {
 			
 		};
-		this.appendMsg= function(nick,text) {
+		this.renderMsg= function(nick,text) {
+			
+		};
+		this.sentMsg= function(nick,text) {
 			//look up user info
 			//insert text
-		
-						
+			$.ajax({
+				cache: false,
+				type: "GET",
+				dataType: "json",
+				url: "/send",
+				data: {
+					id: CONFIG.id,
+					text: JSON.stringify({type:'msg', text:text})
+				},
+				error: function(){
+					
+				},
+				success: function(){
+				
+				}
+			});
+			
 			message_field[0].scrollTop = message_field[0].scrollHeight;
 		};
 		message_icon.click(function(e){
@@ -765,6 +784,9 @@
 				message_box.hide();
 				message_box.__show= false;
 			}
+		});
+		send_input.keydown(function(e){
+			
 		});
 		
 	};
