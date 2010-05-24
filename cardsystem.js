@@ -219,8 +219,14 @@
 			pad.append(applyB);
 			$('body').after(pad);			
 		},
+		fillFLash:function(obj) {
+			this.el.pad.find("input")[0].value= obj.width;
+			this.el.pad.find("input")[1].value= obj.height;
+			this.el.pad.find("input")[2].value= obj.src||"";
+		},
 		buildEvent_flash:function(){
 			var _this= this;
+			var param= {};
 			this.el.applyB.click(function(e){
 				//调整大小
 				_this.host._width= parseInt(_this.el.pad.find("input")[0].value,10);
@@ -228,12 +234,18 @@
 				_this.host.setSize();
 				_this.host._src= _this.el.pad.find("input")[2].value;
 				if (_this.host._src) {
+					param.src= _this.host._src;
 					_this.host.el.content.html('<embed \
 						src="' + _this.host._src + '" \
 						quality="high" style="width:100%;height:100%" align="middle" \
 						allowScriptAccess="sameDomain" type="application/x-shockwave-flash">\
 					</embed>');
 				}
+				param.width= _this.host._width;
+				param.height= _this.host._height;
+				param.id= _this.host.id;
+				//TODO
+				_this.push({type:"apply",data:param})
 			});					
 		},
 		destory:function() {
@@ -277,6 +289,27 @@
 			else {
 				this.hide();
 			}
+		},
+		push:function(option,success,error) {
+			//json2string
+			var _option = JSON.stringify(option);
+			//推参数
+			$.ajax({
+				cache: false,
+				type: "GET",
+				dataType: "json",
+				url: "/send",
+				data: {
+					id: CONFIG.id,
+					text: _option
+				},
+				error: error||function(){
+				
+				},
+				success: success||function(){
+				
+				}
+			});
 		}
 	};
 	var wrapControlPad= function(host,type) {
@@ -315,7 +348,6 @@
 			}else {
 				id= CONFIG.name+CONFIG.maxID++;
 				this.option.id= id;
-				//TODO
 				this.push({type:"create",data:this.option});
 			}
 			this.id= id;
@@ -364,7 +396,6 @@
 			this.enableDrage();
 		},
 		destory:function(){
-			//TODO
 			this.el.card.remove();
 			if (this.commander) {
 				this.commander.destory();
@@ -372,10 +403,47 @@
 			this.push({type:"close",data:{id:this.id}});
 			delete CONFIG.cards[this.id];
 		},
-		setImg:function() {
+		setHeight:function(height) {
+			if(height) {
+				this._height= height;
+			}
+			var card= this.el.card;
+			card.css("height",this._height);
+		},
+		setWidth:function(width) {
+			if(width) {
+				this._width= width;
+			}
+			var card= this.el.card;
+			card.css("width",this._width);			
+		},
+		setSize:function(width,height) {
+			this.setHeight(width||null);
+			this.setWidth(height||null);
+			if(this.commander) {
+				this.commander.reFlow();
+			}
+		},
+		setImg:function(src) {
+			if(src) {
+				this._src= src;
+			}
 			this.el.img.attr("src",this._src);
 		},
-		setValue:function() {
+		setFlash:function(src) {
+			if (src) {
+				this._src = src;
+				this.el.content.html('<embed \
+							src="' + this._src + '" \
+							quality="high" style="width:100%;height:100%" align="middle" \
+							allowScriptAccess="sameDomain" type="application/x-shockwave-flash">\
+						</embed>');
+			}
+		},
+		setValue:function(value) {
+			if(value) {
+				this._value= value;
+			}
 			$(this.el.content).html(this._value);
 		},
 		setFontSize:function() {
@@ -384,19 +452,22 @@
 		setFontColor:function() {
 			$(this.el.content).css("color",this._fontColor);
 		},
-		setHeight:function() {
-			var card= this.el.card;
-			card.css("height",this._height);
-		},
-		setWidth:function() {
-			var card= this.el.card;
-			card.css("width",this._width);			
-		},
-		setSize:function() {
-			this.setHeight();
-			this.setWidth();
-			if(this.commander) {
-				this.commander.reFlow();
+		apply:function(obj) {
+			//TODO set commander
+			switch(this._type) {
+				case 'flash':
+					this.setFlash(obj.src);
+					this.setSize(obj.width,obj.height);
+					if(this.commander) {
+						this.commander.fillFLash(obj);
+					}
+					break;
+				case 'text':
+					break;
+				case 'img':
+					break;
+				default:
+					
 			}
 		},
 		setPosition:function(obj) {
