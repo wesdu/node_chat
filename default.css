@@ -516,7 +516,8 @@
 		-moz-box-shadow:-2px -2px 1px rgba(0, 0, 0, .6);
 		background:	rgba(0, 0, 0, .6);
 	}
-	.message-icon {
+	.message_icon {
+		z-index:99998;
 		cursor:pointer;
 		width:59px;
 		height:49px;
@@ -524,7 +525,7 @@
 		right:20px;
 		bottom:20px;
 	}
-	.message-icon:hover {
+	.message_icon:hover {
 		border:solid #F78D1D 1px;
 		-webkit-border-radius: 5px;
 		-webkit-border-radius: 5px;
@@ -533,12 +534,12 @@
 		bottom:19px;
 		right:19px;		
 	}
-	.message-icon:active {
+	.message_icon:active {
 		bottom:18px;
 		-webkit-box-shadow:-2px -2px 1px rgba(0, 0, 0, .6);
 		-moz-box-shadow:-2px -2px 1px rgba(0, 0, 0, .6);
 	}
-	.message-icon span{
+	.message_icon span{
 		position:absolute;
 		right:3px;
 		bottom:3px;
@@ -558,3 +559,126 @@
 		background: -moz-linear-gradient(top,  #00adee,  #0078a5);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');			
 	}
+	.message_box {
+		position:absolute;
+		display:none;
+		right:70px;
+		bottom:70px;
+		z-index:99999;
+		width:500px;
+		height:300px;
+		padding:5px;
+		border:solid 2px #666;
+		-webkit-border-radius: 8px;
+		background:#ffffff;
+		-moz-border-radius: 8px;
+		-webkit-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+		-moz-box-shadow:2px 2px 1px rgba(0, 0, 0, .3);
+	}
+	.message_box .message_field {
+		position:absolute;
+		overflow-x:inherit;
+		overflow-y:auto;
+		width:98%;
+		height:90%;
+		bottom:10%;
+	}
+	.message_box .message_field .message_unit {
+		
+	}
+	.message_box .message_field .message_unit .message_head {
+		margin-top:5px;
+		width:99%;
+		height:35px;
+	}
+	.message_box .message_field .message_unit .message_head img {
+		display:block;
+		height:30px;
+		width:30px;
+		float:left;
+	}
+	.message_box .message_field .message_unit .message_head span {
+		margin-left:10px;
+		height:30px;
+		line-height:30px;
+		float:left;
+	} 
+	.message_box .message_field .message_unit .text_field {
+		position:relative;
+		padding:15px;
+		margin:10px 0 0 0;
+		text-align:center;
+		color:#fff;
+		/* css3 */
+		-moz-border-radius:10px;
+		-webkit-border-radius:10px;
+		border-radius:10px;
+		font-size:12px;
+	}
+	/* creates a rectangle of the colour wanted for the pointy bit */
+	.message_box .message_field .message_unit .before {
+		position:absolute;
+		top:-20px;
+		left:30px;
+		width:15px;
+		height:20px;
+	}
+	/* creates a rounded rectangle to cover part of the rectangle generated above */
+	.message_box .message_field .message_unit .text_field:after {
+		content:"\00a0";
+		position:absolute;
+		top:-20px;
+		left:30px;
+		width:15px;
+		height:20px;
+		background:#fff;
+		/* css3 */
+		-moz-border-radius-bottomright:15px;
+		-webkit-border-bottom-right-radius:15px;
+		border-bottom-right-radius:15px;
+	}
+	.message_box .input_field {
+		position:absolute;
+		bottom:1px;
+		width:98%;
+	}
+	.message_box .input_field input{
+		margin:0;
+		padding:0;
+		border:solid #666 1px;
+		height:20px;
+		width:250px;
+		line-height:20px;
+		float:right;
+	}
+	.message_box .input_field .send_buton{
+		width:40px;
+		height:22px;
+		color:#ffffff;
+		background:#666;
+		float:right;
+	}
+	.message_box .orange {
+		background: #f78d1d;
+		background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+		background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');		
+	}
+	.message_box .black {
+		color: #666;
+		background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444));
+		background: -moz-linear-gradient(top,  #000,  #444);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#666666');			
+	}
+	.message_box .blue {
+		background: #0095cd;
+		background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+		background: -moz-linear-gradient(top,  #00adee,  #0078a5);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');		
+	}
+	.message_box .green {
+		background: #64991e;
+		background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+		background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');		
+	}	

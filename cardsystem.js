@@ -4,6 +4,8 @@
 		_Panel,
 		transmission_errors,
 		channelUrl,
+		messagebox,
+		Messagebox,
 		CONFIG;
 		
 	CONFIG={};
@@ -736,8 +738,41 @@
 			dropped= false;
         };
 	};
+	Messagebox= function() {
+		var message_box= $("#message_box");
+		var message_field= $("#message_field");
+		var send_buton= $("#send_buton");
+		var send_input= $("#send_input");
+		var message_icon= $("#message_icon");
+		message_box.__show= false;
+		var _send= function() {
+			
+		};
+		this.appendMsg= function(nick,text) {
+			//look up user info
+			//insert text
+			
+			
+			
+			
+			message_field[0].scrollTop = message_field[0].scrollHeight;
+		};
+		message_icon.click(function(e){
+			if(!message_box.__show) {
+				message_box.show();
+				send_input.focus();
+				message_field[0].scrollTop = message_field[0].scrollHeight;
+				message_box.__show= true;
+			}else {
+				message_box.hide();
+				message_box.__show= false;
+			}
+		});
+		
+	};
 	$(document).ready(function() {
 		pre_login();
+		messagebox= new Messagebox();
   		//ready
 		//var panel= wrapPanel({left:20,top:20});
 		/*
