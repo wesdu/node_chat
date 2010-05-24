@@ -365,7 +365,9 @@
 		},
 		destory:function(){
 			this.el.card.remove();
-			this.commander.destory();
+			if (this.commander) {
+				this.commander.destory();
+			}
 			this.push({type:"close",data:{id:this.id}});
 			delete this;
 		},
