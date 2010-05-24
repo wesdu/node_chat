@@ -516,3 +516,45 @@
 		-moz-box-shadow:-2px -2px 1px rgba(0, 0, 0, .6);
 		background:	rgba(0, 0, 0, .6);
 	}
+	.message-icon {
+		cursor:pointer;
+		width:59px;
+		height:49px;
+		position:fixed;
+		right:20px;
+		bottom:20px;
+	}
+	.message-icon:hover {
+		border:solid #F78D1D 1px;
+		-webkit-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		-moz-border-radius: 5px;	
+		bottom:19px;
+		right:19px;		
+	}
+	.message-icon:active {
+		bottom:18px;
+		-webkit-box-shadow:-2px -2px 1px rgba(0, 0, 0, .6);
+		-moz-box-shadow:-2px -2px 1px rgba(0, 0, 0, .6);
+	}
+	.message-icon span{
+		position:absolute;
+		right:3px;
+		bottom:3px;
+		text-align:center;
+		width:30px;
+		-webkit-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		-moz-border-radius: 5px;
+		height:12px;
+		font-size:9px;
+		font-weight:bold;
+		color:#F78D1D;
+		line-height:12px;
+		border:solid 1px #666;
+		background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+		background: -moz-linear-gradient(top,  #00adee,  #0078a5);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');			
+	}
