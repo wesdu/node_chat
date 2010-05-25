@@ -172,7 +172,7 @@
 				_this.host._height= parseInt(_this.el.pad.find("input")[1].value,10);
 				param.height= _this.host._height;
 				_this.host.setSize();
-				_this.host._src= _this.el.pad.find("input")[2].value;
+				_this.host._src= _this.el.pad.find("input")[2].value||'/sample.png';
 				if (_this.host._src) {
 					_this.host.setImg();
 					param.src= _this.host._src;
@@ -231,7 +231,7 @@
 			  success: function(data) {
 				_this.host._src= data.src;
 				_this.host.setImg();
-				_this.push({type:"apply",data:{id:_this.host.id,src:_this.host.src}});
+				_this.push({type:"apply",data:{id:_this.host.id,src:_this.host._src}});
 			  }
 			});
 		},
