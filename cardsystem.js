@@ -177,6 +177,7 @@
 					_this.host.setImg();
 					param.src= _this.host._src;
 				}
+				param.id= _this.host.id;
 				_this.push({type:"apply", data:param});
 			});
 			if(typeof FileReader != "undefined") {
@@ -188,17 +189,17 @@
 				//dragInput[0].onchange= function(e){
 				//	_this.uploadFiles(this.files);
 				//};
-	            dragOutter[0].ondragenter= function (e) {
+	            		dragOutter[0].ondragenter= function (e) {
 					dragOutter.html("&nbsp Release Your Button");
 					_this.el.dragOutter.css("background","#faa51a");
 					e.dataTransfer.dropEffect = 'copy';
-	                e.preventDefault();
-	                return false;
-	            };
-	            dragOutter[0].ondragover= function (e) {
-	                e.preventDefault();
-	                return false;
-	            };
+	                		e.preventDefault();
+	                		return false;
+	            		};
+	            		dragOutter[0].ondragover= function (e) {
+	                		e.preventDefault();
+	                		return false;
+	            		};
 				dragOutter[0].ondrop= function(e) {
 					e.preventDefault();
 					dragOutter.html("&nbsp;Drag a picture here");
@@ -208,7 +209,7 @@
 				dragOutter[0].ondragleave= function (e) {
 					dragOutter.html("&nbsp;Drag a picture here");
 					_this.el.dragOutter.css("background","");
-	            };
+	            		};
                 				
 				
 			}
@@ -768,13 +769,6 @@
 				default:
 				
 			}
-				if (data.type == "create") {
-					
-				}
-			
-			else 
-				if (data.type == "change") {
-				}
 		}
 	}
 	function userJoin(nick,data,timestamp) {
