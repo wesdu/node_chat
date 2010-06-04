@@ -156,9 +156,9 @@
 		},
 		fillImg:function(obj) {
 			//TODO
-			this.el.pad.find("input")[0].value= obj.width;
-			this.el.pad.find("input")[1].value= obj.height;
-			this.el.pad.find("input")[2].value= obj.src;
+			this.el.pad.find("input")[0].value= obj.width||this.el.pad.find("input")[0].value;
+			this.el.pad.find("input")[1].value= obj.height||this.el.pad.find("input")[1].value;
+			this.el.pad.find("input")[2].value= obj.src||this.el.pad.find("input")[2].value;
 		},
 		buildEvent_img:function() {
 			var param= {};
@@ -467,6 +467,7 @@
 		setImg:function(src) {
 			if(src) {
 				this._src= src;
+				this.commander.el.pad.find("input")[2].value= src;
 			}
 			this.el.img.attr("src",this._src);
 		},
@@ -518,7 +519,9 @@
 					}					
 					break;
 				case 'img':
-					this.setSize(obj.width,obj.height);
+					if (obj.width && obj.height) {
+						this.setSize(obj.width, obj.height);
+					}
 					this.setImg(obj.src);
 					if(this.commander) {
 						this.commander.fillImg(obj);
