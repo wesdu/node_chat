@@ -25,6 +25,24 @@
 		newClass.prototype = obj;
 		return newClass;
 	};
+	/*
+	 * 用法
+	var object= {
+		init:function(word) {
+			this.setWord(word);
+			this.readWord();
+		},
+		setWord:function(word) {
+			this._word= word;
+		},
+		readWord:function() {
+			alert(this._word);
+		}
+	};
+	var ObjectClass= Class(object);
+	var obj1= new ObjectClass('hello world');
+	*/
+	
 	_ControlPad= {
 		init:function(host,type){
 			this.type= type;
@@ -189,17 +207,17 @@
 				//dragInput[0].onchange= function(e){
 				//	_this.uploadFiles(this.files);
 				//};
-	            		dragOutter[0].ondragenter= function (e) {
+	            dragOutter[0].ondragenter= function (e) {
 					dragOutter.html("&nbsp Release Your Button");
 					_this.el.dragOutter.css("background","#faa51a");
 					e.dataTransfer.dropEffect = 'copy';
-	                		e.preventDefault();
-	                		return false;
-	            		};
-	            		dragOutter[0].ondragover= function (e) {
-	                		e.preventDefault();
-	                		return false;
-	            		};
+	                e.preventDefault();
+	                return false;
+	            };
+	            dragOutter[0].ondragover= function (e) {
+	                e.preventDefault();
+	                return false;
+	            };
 				dragOutter[0].ondrop= function(e) {
 					e.preventDefault();
 					dragOutter.html("&nbsp;Drag a picture here");
@@ -209,9 +227,7 @@
 				dragOutter[0].ondragleave= function (e) {
 					dragOutter.html("&nbsp;Drag a picture here");
 					_this.el.dragOutter.css("background","");
-	            		};
-                				
-				
+	            };
 			}
 		},
 		uploadFiles:function(files) {
@@ -858,7 +874,7 @@
 		   		CONFIG.name= option.nick;
 				CONFIG.id   = session.id;
 				$("#channel_tip").html("The Channel Url: http://gin.com/?channel="+channelUrl);
-				$("#channel_tip").show();	
+				$("#channel_tip").show();
 				$("#message_icon").show();		
 				longPoll();
 		   }
