@@ -246,6 +246,7 @@
 			  dataType: "json",
 			  success: function(data) {
 				_this.host._src= data.src;
+				_this.el.pad.find("input")[2].value= data.src;
 				_this.host.setImg();
 				_this.push({type:"apply",data:{id:_this.host.id,src:_this.host._src}});
 			  }
